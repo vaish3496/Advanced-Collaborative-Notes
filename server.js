@@ -25,7 +25,6 @@ io.sockets.on('connection', socket => {
 
     socket.on('update_notes_for_current_users',(data) =>{
         notes_text = data
-        console.log('data '+data);
         io.sockets.emit('update_notes_for_current_users',notes_text)
     })
 })
