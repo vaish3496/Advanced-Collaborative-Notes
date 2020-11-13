@@ -21,11 +21,11 @@ var notes_text
 
 
 io.sockets.on('connection', socket => {
-    io.sockets.emit('update_notes_for_new_users',notes_text)
+    socket.broadcast.emit('update_notes_for_new_users',notes_text)
 
     socket.on('update_notes_for_current_users',(data) =>{
         notes_text = data
-        io.sockets.emit('update_notes_for_current_users',notes_text)
+        socket.broadcast.emit('update_notes_for_current_users',notes_text)
     })
 })
 

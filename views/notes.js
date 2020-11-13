@@ -17,4 +17,5 @@ textarea_notes.addEventListener('keyup' , () => {
 
 socket.on('update_notes_for_current_users',(notes_text) =>{
     textarea_notes.value = notes_text;
+    console.log(notes_text)
 })
