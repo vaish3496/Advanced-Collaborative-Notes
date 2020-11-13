@@ -1,4 +1,4 @@
-const socket = io('http://localhost:8800')
+const socket = io('https://collaborative-notes.herokuapp.com/')
 var textarea_notes = document.getElementById('textarea_notes')
 
 
