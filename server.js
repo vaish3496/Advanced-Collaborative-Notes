@@ -21,7 +21,7 @@ var notes_text
 
 
 io.sockets.on('connection', socket => {
-    socket.broadcast.emit('update_notes_for_new_users',notes_text)
+    io.sockets.emit('update_notes_for_new_users',notes_text)
 
     socket.on('update_notes_for_current_users',(data) =>{
         notes_text = data
