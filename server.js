@@ -14,7 +14,8 @@ app.set('view engine', 'html')
 
 
 app.get('/', (req,res) =>{
-    res.render('index')
+    res.redirect('/home')
+    console.log('redirect here')
 })
 
 app.get('/home', (req,res) =>{
@@ -37,7 +38,7 @@ io.sockets.on('connection', socket => {
         // console.log(roomId)
         // socket.join(roomId)
         console.log(data)
-        io.to(roomId).emit('update_notes_for_current_users',data)
+        socket.broadcast.to(roomId).emit('update_notes_for_current_users',data)
         // console.log(data,roomId,socket.id)
         var clients = io.sockets.adapter.rooms;
         console.log(clients)
@@ -51,11 +52,11 @@ io.sockets.on('connection', socket => {
         console.log("user created room",socket.id)
     })
 
-    socket.on('join_room', (roomId) =>{
-        socket.join(roomId)
-        // io.to(roomId).emit('send-roomId',roomId)
-        console.log("user joined room",socket.id)
-    })
+    // socket.on('join_room', (roomId) =>{
+    //     socket.join(roomId)
+    //     // io.to(roomId).emit('send-roomId',roomId)
+    //     console.log("user joined room",socket.id)
+    // })
 
 })
 

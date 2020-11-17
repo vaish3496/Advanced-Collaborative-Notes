@@ -1,5 +1,5 @@
-const socket = io('https://collaborative-notes-io.herokuapp.com/')
-// const socket = io('http://localhost:8800')
+// const socket = io('https://collaborative-notes-io.herokuapp.com/')
+const socket = io('http://localhost:8800')
 const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 
 
@@ -25,7 +25,7 @@ window.onload = ()=>{
 
     if(textarea_notes){
         socket.emit('create_new_room',getLastItem(window.location.href))
-        socket.emit('join_room',getLastItem(window.location.href))
+        // socket.emit('join_room',getLastItem(window.location.href))
         console.log('new room created after redirect')
         textarea_notes.addEventListener('keyup' , () => {
             // setTimeout(() => {
@@ -53,5 +53,5 @@ socket.on('update_notes_for_new_users', notes_text =>{
 
 socket.on('update_notes_for_current_users',notes_text =>{
     textarea_notes.value = notes_text;
-    console.log(notes_text,'are we here?',textarea_notes.value)
+    // console.log(notes_text,'are we here?',textarea_notes.value)
 })
