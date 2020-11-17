@@ -3,6 +3,7 @@ const socket = io('https://collaborative-notes-io.herokuapp.com/')
 const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 
 
+
 window.onload = ()=>{
     var create_room = document.getElementById('create_room')
     var join_room = document.getElementById('join_room')
@@ -13,7 +14,6 @@ window.onload = ()=>{
     //         socket.emit('create_new_room')
     //     });
     // }
-
     if(join_room){
         join_room.addEventListener('click', () =>{
             const join_roomId = prompt('Enter Room ID')
@@ -26,7 +26,6 @@ window.onload = ()=>{
     if(textarea_notes){
         socket.emit('create_new_room',getLastItem(window.location.href))
         // socket.emit('join_room',getLastItem(window.location.href))
-        console.log('new room created after redirect')
         textarea_notes.addEventListener('keyup' , () => {
             // setTimeout(() => {
             //     socket.emit('update_notes_for_current_users',textarea_notes.value)
@@ -39,10 +38,18 @@ window.onload = ()=>{
 
 
 
-socket.on('send-roomId', roomId =>{
-    console.log('send-roomId')
-    window.location.href = `http://localhost:8800/${roomId}`
-})
+
+
+
+
+
+
+
+
+// socket.on('send-roomId', roomId =>{
+//     console.log('send-roomId')
+//     window.location.href = `http://localhost:8800/${roomId}`
+// })
 
 
 

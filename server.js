@@ -8,7 +8,7 @@ const {v4:uuid4} = require('uuid')
 const port = process.env.PORT || 8800
 
 
-app.use(express.static(__dirname+'/views'))
+app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
@@ -37,12 +37,12 @@ io.sockets.on('connection', socket => {
     socket.on('update_notes_for_current_users',(data,roomId) =>{
         // console.log(roomId)
         // socket.join(roomId)
-        console.log(data)
+        // console.log(data)
         socket.broadcast.to(roomId).emit('update_notes_for_current_users',data)
         // console.log(data,roomId,socket.id)
-        var clients = io.sockets.adapter.rooms;
-        console.log(clients)
-        console.log(socket.id)
+        // var clients = io.sockets.adapter.rooms;
+        // console.log(clients)
+        // console.log(socket.id)
     })
 
     socket.on('create_new_room', (roomId) =>{
