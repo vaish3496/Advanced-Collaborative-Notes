@@ -1,5 +1,5 @@
-// const socket = io('https://collaborative-notes.herokuapp.com/')
-const socket = io('http://localhost:8800')
+const socket = io('https://collaborative-notes-io.herokuapp.com/')
+// const socket = io('http://localhost:8800')
 const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 
 
