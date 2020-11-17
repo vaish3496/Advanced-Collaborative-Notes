@@ -27,7 +27,7 @@ app.get('/:id', (req,res) => {
 })
 
 
-
+var notes_text
 
 
 
@@ -38,6 +38,7 @@ io.sockets.on('connection', socket => {
         // console.log(roomId)
         // socket.join(roomId)
         // console.log(data)
+        notes_text = data
         socket.broadcast.to(roomId).emit('update_notes_for_current_users',data)
         // console.log(data,roomId,socket.id)
         // var clients = io.sockets.adapter.rooms;
@@ -48,8 +49,9 @@ io.sockets.on('connection', socket => {
     socket.on('create_new_room', (roomId) =>{
         // const roomId = uuid4()
         socket.join(roomId)
+        io.to(socket.id).emit('update_notes_for_new_users',notes_text)
         // io.to(roomId).emit('send-roomId',roomId)
-        console.log("user created room",socket.id)
+        // console.log("user created room",socket.id)
     })
 
     // socket.on('join_room', (roomId) =>{
