@@ -6,7 +6,7 @@ const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 
 window.onload = ()=>{
     var create_room = document.getElementById('create_room')
-    var join_room = document.getElementById('join_room')
+    // var join_room = document.getElementById('join_room')
     var textarea_notes = document.getElementById('textarea_notes')
     // if(create_room){
     //     create_room.addEventListener('click', () =>{
@@ -14,14 +14,14 @@ window.onload = ()=>{
     //         socket.emit('create_new_room')
     //     });
     // }
-    if(join_room){
-        join_room.addEventListener('click', () =>{
-            const join_roomId = prompt('Enter Room ID')
-            // socket.emit('join_room',join_roomId)
-            window.location.href = `http://localhost:8800/${join_roomId}`
-        })
+    // if(join_room){
+    //     join_room.addEventListener('click', () =>{
+    //         const join_roomId = prompt('Enter Room ID')
+    //         // socket.emit('join_room',join_roomId)
+    //         window.location.href = `http://localhost:8800/${join_roomId}`
+    //     })
         
-    }
+    // }
 
     if(textarea_notes){
         socket.emit('create_new_room',getLastItem(window.location.href))

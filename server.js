@@ -15,7 +15,6 @@ app.set('view engine', 'html')
 
 app.get('/', (req,res) =>{
     res.redirect('/home')
-    console.log('redirect here')
 })
 
 app.get('/home', (req,res) =>{
