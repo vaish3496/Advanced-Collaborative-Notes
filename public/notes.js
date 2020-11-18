@@ -5,7 +5,7 @@ const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 
 
 window.onload = ()=>{
-    var create_room = document.getElementById('create_room')
+    // var create_room = document.getElementById('create_room')
     // var join_room = document.getElementById('join_room')
     var textarea_notes = document.getElementById('textarea_notes')
     // if(create_room){
