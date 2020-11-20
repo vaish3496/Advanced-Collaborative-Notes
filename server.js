@@ -8,6 +8,7 @@ const {v4:uuid4} = require('uuid')
 const port = process.env.PORT || 8800
 
 rooms_data = {}
+editor_data = {}
 
 app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
@@ -46,10 +47,19 @@ io.sockets.on('connection', socket => {
         // console.log(socket.id)
     })
 
+    socket.on('update_editor_for_current_users',(data,roomId) =>{
+        editor_data[roomId] = data
+        socket.broadcast.to(roomId).emit('update_editor_for_current_users',data)
+    })
+
     socket.on('create_new_room', (roomId) =>{
         // const roomId = uuid4()
         socket.join(roomId)
+        if(!(roomId in editor_data)){
+            editor_data[roomId] = ''
+        }
         io.to(socket.id).emit('update_notes_for_new_users',rooms_data[roomId])
+        io.to(socket.id).emit('update_editor_for_new_users',editor_data[roomId])
         // io.to(roomId).emit('send-roomId',roomId)
         // console.log("user created room",socket.id)
     })
