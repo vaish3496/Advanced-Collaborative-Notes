@@ -9,6 +9,7 @@ window.onload = ()=>{
     // var join_room = document.getElementById('join_room')
     var textarea_notes = document.getElementById('textarea_notes')
     var editor = ace.edit("editor");
+    var run_script = document.getElementById('run_script')
     
     // if(create_room){
     //     create_room.addEventListener('click', () =>{
@@ -41,6 +42,10 @@ window.onload = ()=>{
         editor.textInput.getElement().addEventListener('keyup', () =>{
             socket.emit('update_editor_for_current_users',editor.getValue(),getLastItem(window.location.href))
             // console.log(editor.getValue())
+        })
+
+        run_script.addEventListener('click', () =>{
+            socket.emit('run_python_script',editor.getValue(),getLastItem(window.location.href))
         })
     }
 
@@ -82,4 +87,9 @@ socket.on('update_notes_for_current_users',notes_text =>{
 socket.on('update_editor_for_current_users',notes_text =>{
     var editor = ace.edit("editor");
     editor.setValue(notes_text,1);
+})
+
+socket.on('update_output_for_current_users', result =>{
+    const output = document.getElementById('output')
+    output.innerHTML = result
 })

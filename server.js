@@ -4,6 +4,9 @@ const app = express()
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 const {v4:uuid4} = require('uuid')
+const fs = require('fs')
+const {spawn} = require('child_process')
+const { cpuUsage } = require('process')
 
 const port = process.env.PORT || 8800
 
@@ -26,10 +29,6 @@ app.get('/home', (req,res) =>{
 app.get('/:id', (req,res) => {
     res.render('index')
 })
-
-
-var notes_text
-
 
 
 io.sockets.on('connection', socket => {
@@ -64,11 +63,31 @@ io.sockets.on('connection', socket => {
         // console.log("user created room",socket.id)
     })
 
-    // socket.on('join_room', (roomId) =>{
-    //     socket.join(roomId)
-    //     // io.to(roomId).emit('send-roomId',roomId)
-    //     console.log("user joined room",socket.id)
-    // })
+    socket.on('run_python_script', (data,roomId) =>{
+        const fileName = new Date().getTime().toString()+'.py'
+        var output = ''
+        fs.appendFile(`python/${fileName}`,data, function (err) {
+            if (err) throw err;
+          });
+        const python = spawn('python',[`python/${fileName}`])
+        python.stdout.on('data', (data) =>{
+            // console.log(data.toString())
+            output = output.concat(data.toString())
+            // console.log(output)
+        })
+        python.on('close', (code) => {
+            // console.log(`Exit code: ${code}`);
+            output = output.concat(`Exit code: ${code}`)
+            // console.log(output)
+            socket.broadcast.to(roomId).emit('update_output_for_current_users',output)
+            io.to(socket.id).emit('update_output_for_current_users',output)
+            fs.unlink(`python/${fileName}`, function (err) {
+                if (err) throw err;
+              });
+        })
+
+        
+    })
 
 })
 
