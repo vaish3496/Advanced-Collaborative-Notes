@@ -6,7 +6,6 @@ const io = require('socket.io')(server)
 const {v4:uuid4} = require('uuid')
 const fs = require('fs')
 const {spawn} = require('child_process')
-const { cpuUsage } = require('process')
 
 const port = process.env.PORT || 8800
 
@@ -77,7 +76,7 @@ io.sockets.on('connection', socket => {
         })
         python.on('close', (code) => {
             // console.log(`Exit code: ${code}`);
-            output = output.concat(`Exit code: ${code}`)
+            output = output.concat(`\nExit code: ${code}`)
             // console.log(output)
             socket.broadcast.to(roomId).emit('update_output_for_current_users',output)
             io.to(socket.id).emit('update_output_for_current_users',output)
