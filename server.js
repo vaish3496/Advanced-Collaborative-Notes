@@ -69,6 +69,7 @@ io.sockets.on('connection', socket => {
             if (err) throw err;
           });
         const python = spawn('python',[`python/${fileName}`])
+        // const python = spawn('C:/Users/vaish/PycharmProjects/HeadLessChrome/venv/Scripts/python.exe',[`python/${fileName}`])
         python.stdout.on('data', (data) =>{
             // console.log(data.toString())
             output = output.concat(data.toString())
@@ -76,7 +77,7 @@ io.sockets.on('connection', socket => {
         })
         python.on('close', (code) => {
             // console.log(`Exit code: ${code}`);
-            output = output.concat(`\nExit code: ${code}`)
+            output = output.concat(`Exit code: ${code}`)
             // console.log(output)
             socket.broadcast.to(roomId).emit('update_output_for_current_users',output)
             io.to(socket.id).emit('update_output_for_current_users',output)
